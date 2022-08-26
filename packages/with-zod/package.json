@@ -1,0 +1,29 @@
+{
+  "name": "@solid-start-enhanced-form/with-zod",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "peerDependencies": {
+    "solid-start-enhanced-form": "^0.1.0"
+  },
+  "devDependencies": {
+    "solid-start-enhanced-form": "workspace:*"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "simple-git-hooks",
+    "dev": "pnpm -r --parallel --filter=./packages/* run dev",
+    "build": "pnpm -r --filter=./packages/* run build",
+    "format": "prettier --write --loglevel warn .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "release": "standard-version"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-solid": "^0.7.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "simple-git-hooks": "^2.8.0",
+    "standard-version": "^9.5.0",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.2"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "FORCE_COLOR=1 pnpm exec lint-staged",
+    "commit-msg": "pnpm exec commitlint -e $1"
+  },
+  "lint-staged": {
+    "*.ts?(x)": [
+      "pnpm run format",
+      "pnpm run lint"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:solid/typescript",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "ignorePatterns": [
+      "dist"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "solid",
+      "@typescript-eslint"
+    ],
+    "root": true
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "none"
+  }
+}
