@@ -26,7 +26,7 @@
     "typescript": "^4.8.2"
   },
   "simple-git-hooks": {
-    "pre-commit": "FORCE_COLOR=1 pnpm exec lint-staged",
+    "pre-commit": "pnpm exec lint-staged",
     "commit-msg": "pnpm exec commitlint -e $1"
   },
   "lint-staged": {
