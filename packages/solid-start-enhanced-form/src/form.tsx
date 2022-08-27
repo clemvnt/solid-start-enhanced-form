@@ -13,12 +13,13 @@ export interface EnhancedFormConfig<T> {
 
 function validateElement<T>(
   element: HTMLInputElement,
+  data: FormData,
   validator?: FormDataValidator<T>
 ) {
   element.setCustomValidity('')
 
   if (validator?.hasValidator(element.name)) {
-    const error = validator.validateField?.(element.name, element.value)
+    const error = validator.validateField(element.name, data)
     if (error) {
       element.setCustomValidity(error)
       return error
@@ -38,6 +39,8 @@ function validateElement<T>(
 export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
   const { serverAction, validator, defaultValues } = config
 
+  let form: HTMLFormElement
+
   const fields: Record<string, HTMLInputElement> = {}
 
   const [errors, setErrors] = createStore<ValidationErrors>({})
@@ -49,13 +52,14 @@ export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
   function onSubmit(event: Event) {
     const errors: ValidationErrors = {}
 
+    const data = new FormData(form)
+
     let errored = false
 
     for (const name in fields) {
       const element = fields[name]
 
-      const error = validateElement(element, validator)
-
+      const error = validateElement(element, data, validator)
       if (error) {
         if (!errored) {
           errored = true
@@ -84,11 +88,15 @@ export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
             resetError: (name) => setErrors({ [name]: undefined }),
             validateField: (name) =>
               setErrors({
-                [name]: validateElement(fields[name], validator)
+                [name]: validateElement(
+                  fields[name],
+                  new FormData(form),
+                  validator
+                )
               })
           }}
         >
-          <serverAction.Form {...props} onSubmit={onSubmit} />
+          <serverAction.Form ref={form} {...props} onSubmit={onSubmit} />
         </enhancedFormContext.Provider>
       )
     }

@@ -7,10 +7,16 @@ export type ValidationResult<T> =
 export interface GenericValidator<T, U = Record<string, unknown>> {
   hasValidator(name: string): boolean
   validate(data: U): ValidationResult<T>
-  validateField(name: string, value: unknown): string | undefined
+  validateField(name: string, value: U): string | undefined
 }
 
 export type FormDataValidator<T> = GenericValidator<T, FormData>
+
+function convertFormDataToRecord(formData: FormData) {
+  const data: Record<string, unknown> = {}
+  formData.forEach((value, key) => (data[key] = value))
+  return data
+}
 
 export function createValidator<T>(
   validator: GenericValidator<T>
@@ -20,12 +26,10 @@ export function createValidator<T>(
       return validator.hasValidator(name)
     },
     validate(data) {
-      const obj: Record<string, unknown> = {}
-      data.forEach((value, key) => (obj[key] = value))
-      return validator.validate(obj)
+      return validator.validate(convertFormDataToRecord(data))
     },
     validateField(name, data) {
-      return validator.validateField(name, data)
+      return validator.validateField(name, convertFormDataToRecord(data))
     }
   }
 }
