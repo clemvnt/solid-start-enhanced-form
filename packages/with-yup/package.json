@@ -17,10 +17,12 @@
     }
   },
   "peerDependencies": {
-    "solid-start-enhanced-form": "^0.1.0"
+    "solid-start-enhanced-form": "^0.1.0",
+    "yup": "^1.0.0-beta.7"
   },
   "devDependencies": {
-    "solid-start-enhanced-form": "workspace:*"
+    "solid-start-enhanced-form": "workspace:*",
+    "yup": "^1.0.0-beta.7"
   },
   "scripts": {
     "dev": "tsup --watch",
