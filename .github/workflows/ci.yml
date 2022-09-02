@@ -23,8 +23,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm run build
+      - run: pnpm build
 
-      - run: pnpm run format
+      - run: pnpm test:unit
 
-      - run: pnpm run lint
+      - run: pnpm test:e2e

@@ -16,3 +16,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm run build
+
+      - run: pnpm test:unit
+
+      - run: pnpm test:e2e
