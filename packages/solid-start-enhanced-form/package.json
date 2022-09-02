@@ -2,13 +2,7 @@
   "name": "solid-start-enhanced-form",
   "version": "0.1.0",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,16 +10,22 @@
       "require": "./dist/index.cjs"
     }
   },
-  "peerDependencies": {
-    "solid-js": "^1.5.1",
-    "solid-start": "0.1.0-alpha.99"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "devDependencies": {
-    "solid-js": "^1.5.1",
-    "solid-start": "0.1.0-alpha.99"
+    "solid-js": "^1.5.4",
+    "solid-start": "0.1.0-alpha.100"
   },
-  "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup"
+  "peerDependencies": {
+    "solid-js": "^1.5.4",
+    "solid-start": "0.1.0-alpha.100"
   }
 }

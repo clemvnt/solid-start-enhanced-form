@@ -5,6 +5,8 @@ export { createEnhancedForm } from './form'
 
 export type {
   ValidationErrors,
+  ValidValidationResult,
+  InvalidValidationResult,
   ValidationResult,
   GenericValidator,
   FormDataValidator

@@ -32,7 +32,10 @@ export function withYup<T extends ObjectShape>(
     },
     validate(data) {
       try {
-        const result = schema.validateSync(data)
+        const result = schema.validateSync(data, {
+          strict: true,
+          abortEarly: false
+        })
         return { success: true, data: result }
       } catch (error) {
         return {

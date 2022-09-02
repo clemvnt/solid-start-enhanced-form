@@ -2,13 +2,7 @@
   "name": "@solid-start-enhanced-form/with-yup",
   "version": "0.1.0",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,16 +10,22 @@
       "require": "./dist/index.cjs"
     }
   },
-  "peerDependencies": {
-    "solid-start-enhanced-form": "^0.1.0",
-    "yup": "^1.0.0-beta.7"
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "devDependencies": {
     "solid-start-enhanced-form": "workspace:*",
     "yup": "^1.0.0-beta.7"
   },
-  "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup"
+  "peerDependencies": {
+    "solid-start-enhanced-form": "^0.1.0",
+    "yup": "^1.0.0-beta.7"
   }
 }

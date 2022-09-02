@@ -4,16 +4,30 @@ import { z, ZodError } from 'zod'
 function toValidationErrors(error: ZodError): ValidationErrors {
   const errors: ValidationErrors = {}
 
-  const { fieldErrors } = error.flatten()
-
-  for (const key in fieldErrors) {
-    const fieldError = fieldErrors[key]
-    if (fieldError) {
-      errors[key] = fieldError.join(' `')
-    }
+  for (const innerError of error.errors) {
+    errors[flatPath(innerError.path)] = innerError.message
   }
 
   return errors
+}
+
+function flatPath(pathArray: (string | number)[]): string {
+  let pathString = ''
+
+  for (const part of pathArray) {
+    if (typeof part === 'number') {
+      pathString += `[${part}]`
+      continue
+    }
+
+    if (pathString !== '') {
+      pathString += '.'
+    }
+
+    pathString += part
+  }
+
+  return pathString
 }
 
 export function withZod<T extends z.ZodRawShape>(
