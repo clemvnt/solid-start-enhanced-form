@@ -1,6 +1,6 @@
 import { createEffect, untrack } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { FormProps } from 'solid-start'
+import { FormError, FormProps } from 'solid-start'
 import { RouteAction } from 'solid-start/data/createRouteAction'
 import { enhancedFormContext } from './context'
 import { FormDataValidator, ValidationErrors } from './validator'
@@ -37,7 +37,11 @@ function validateElement<T>(
 }
 
 export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
-  const { serverAction, validator, defaultValues } = config
+  const {
+    serverAction: [submission, { Form: ServerActionForm }],
+    validator,
+    defaultValues
+  } = config
 
   let form: HTMLFormElement
 
@@ -46,7 +50,7 @@ export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
   const [errors, setErrors] = createStore<ValidationErrors>({})
 
   createEffect(() => {
-    setErrors(serverAction.error?.fieldErrors ?? {})
+    setErrors((submission.error as FormError | undefined)?.fieldErrors ?? {})
   })
 
   function onSubmit(event: Event) {
@@ -96,7 +100,7 @@ export function createEnhancedForm<T>(config: EnhancedFormConfig<T>) {
               })
           }}
         >
-          <serverAction.Form ref={form} {...props} onSubmit={onSubmit} />
+          <ServerActionForm ref={form} {...props} onSubmit={onSubmit} />
         </enhancedFormContext.Provider>
       )
     }
